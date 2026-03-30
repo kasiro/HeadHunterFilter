@@ -140,6 +140,7 @@
   border: 2px solid;
   border-radius: $commonBorderRadius;
   background-color: transparent;
+  color: var(--text-primary, black);
   transition: .2s;
   cursor: pointer;
 
