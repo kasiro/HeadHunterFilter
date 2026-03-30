@@ -79,8 +79,8 @@
 }
 
 :global(.popup) {
-  color: variables.$textColor;
-  background: #fff;
+  color: var(--text-primary, variables.$textColor);
+  background: var(--bg-secondary, #fff);
   position: absolute;
   top: calc(100% + 5px);
   left: 0;
@@ -88,6 +88,8 @@
   border-radius: 8px;
   font-size: 15px;
   z-index: 1;
+  border: 1px solid var(--border-color, #EEEFF5);
+  box-shadow: 0 4px 12px var(--shadow-color, rgba(0, 0, 0, 0.1));
 }
 
 .salary {

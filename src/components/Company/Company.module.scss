@@ -5,12 +5,13 @@
   padding: 20px 20px;
   border: 2px solid transparent;
   border-radius: $commonBorderRadius;
-  background-color: #fff;
+  background-color: var(--bg-tertiary, #fff);
+  transition: background-color 0.2s, border-color 0.2s;
 
   &Archived {
     @extend .item;
     background-color: transparent;
-    border-color: #fff;
+    border-color: var(--bg-tertiary, #fff);
   }
 }
 
@@ -32,6 +33,7 @@
     font-size: 18px;
     word-break: break-word;
     transition: color .2s;
+    color: var(--text-primary, black);
   }
 
   img {

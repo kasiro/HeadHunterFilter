@@ -33,9 +33,9 @@ function Settings({ theme, toggleTheme }: SettingsProps) {
   const [importError, setImportError] = useState<string | null>(null);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
-  // Load settings on mount
+  // Load settings on mount - sync with actual localStorage
   useEffect(() => {
-    const savedTheme = getLS('theme') || theme;
+    const savedTheme = getLS('theme') || 'light';
     const savedMinSalary = getLS(BaseFormFields.minSalary) || 0;
     const savedNewInDays = getLS('newInDays') || 30;
 
@@ -48,7 +48,7 @@ function Settings({ theme, toggleTheme }: SettingsProps) {
         newInDays: savedNewInDays,
       },
     }));
-  }, [theme]);
+  }, []);
 
   // Theme toggle handler - uses Redux action
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
@@ -57,6 +57,11 @@ function Settings({ theme, toggleTheme }: SettingsProps) {
     localStorage.setItem('theme', newTheme);
     setSettings(prev => ({ ...prev, theme: newTheme }));
     toggleTheme(); // Dispatch Redux action to sync state
+  };
+
+  // Back to main page
+  const handleBack = () => {
+    window.location.reload();
   };
 
   // Filter defaults handlers
@@ -193,7 +198,12 @@ function Settings({ theme, toggleTheme }: SettingsProps) {
 
   return (
     <div className={styles.settings}>
-      <h1 className={styles.title}>Settings</h1>
+      <div className={styles.header}>
+        <button className={styles.backBtn} onClick={handleBack}>
+          ← Назад
+        </button>
+        <h1 className={styles.title}>Settings</h1>
+      </div>
 
       {/* Theme Section */}
       <section className={styles.section}>
@@ -203,19 +213,21 @@ function Settings({ theme, toggleTheme }: SettingsProps) {
             <input
               type="radio"
               name="theme"
+              value="light"
               checked={settings.theme === 'light'}
               onChange={() => handleThemeChange('light')}
             />
-            <span>Light</span>
+            <span className={styles.themeLabel}>☀️ Light</span>
           </label>
           <label className={styles.themeOption}>
             <input
               type="radio"
               name="theme"
+              value="dark"
               checked={settings.theme === 'dark'}
               onChange={() => handleThemeChange('dark')}
             />
-            <span>Dark</span>
+            <span className={styles.themeLabel}>🌙 Dark</span>
           </label>
         </div>
       </section>

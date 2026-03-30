@@ -9,18 +9,20 @@
   flex-direction: column;
   flex-grow: 1;
   padding: 20px 0 0;
-  background-color: #ffffff;
+  background-color: var(--bg-secondary, #ffffff);
+  transition: background-color 0.2s;
 }
 
 .fewExpAlert {
   font-weight: 500;
   font-size: 14px;
+  color: var(--text-primary, black);
 }
 
 .loader {
   height: 14px;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: var(--bg-tertiary, #fff);
   overflow: hidden;
 
   span {
