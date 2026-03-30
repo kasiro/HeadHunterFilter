@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import { ReactComponent as Info } from '../../assets/info.svg';
 import { Form } from '../Form';
+import { Settings } from '../Settings';
 import styles from './Header.module.scss';
 import {
   clearList, toggleVisibilityArchived, removeArchived, toggleSalaryOnly, toggleTheme,
@@ -11,6 +12,12 @@ import { AppProps, HeaderProps } from './Header.types';
 import { BUTTONS_DATA } from './Header.constants';
 
 function Header(props: HeaderProps) {
+  const [showSettings, setShowSettings] = React.useState(false);
+
+  if (showSettings) {
+    return <Settings />;
+  }
+
   return (
     <header>
       <div className="container">
@@ -88,6 +95,16 @@ function Header(props: HeaderProps) {
               data-effect="solid"
             >
               🌙
+            </button>
+
+            <button
+              type="button"
+              className={styles.settingsBtn}
+              onClick={() => setShowSettings(true)}
+              data-tip="Настройки"
+              data-effect="solid"
+            >
+              ⚙️
             </button>
 
             <ReactTooltip globalEventOff="click" />

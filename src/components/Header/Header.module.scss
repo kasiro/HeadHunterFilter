@@ -205,7 +205,18 @@
   border-color: $customPurpleL;
   font-size: 20px;
   padding: 8px 12px;
-  
+
+  &:hover {
+    background-color: $customPurpleL;
+  }
+}
+
+.settingsBtn {
+  composes: btn;
+  border-color: $customPurpleL;
+  font-size: 20px;
+  padding: 8px 12px;
+
   &:hover {
     background-color: $customPurpleL;
   }
