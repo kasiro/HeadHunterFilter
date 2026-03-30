@@ -10,12 +10,12 @@
   --link-color: #8b8585;
   --link-hover: cornflowerblue;
   --border-color: #EEEFF5;
-  
+
   /* Brand colors */
   --purple-primary: #5E72EB;
   --purple-dark: #495fe4;
   --purple-light: #CFD4F0;
-  
+
   /* Status colors */
   --fav-color: #fccea6;
   --new-color: #f49c9c;
@@ -25,7 +25,11 @@
   --salary-color: #abd59f;
   --default-color: #b3b3b3;
   --red-color: #f67b7b;
-  
+
+  /* Vacancy title color */
+  --vacancy-title-color: #8b8585;
+  --vacancy-title-hover: cornflowerblue;
+
   /* Special */
   --highlight-bg: #ffff90;
   --shadow-color: rgba(0, 0, 0, 0.1);
@@ -41,12 +45,12 @@
   --link-color: #b8b8b8;
   --link-hover: #a8c8ff;
   --border-color: #2a2a4a;
-  
+
   /* Brand colors - adjusted for dark */
   --purple-primary: #7b8ef5;
   --purple-dark: #5e72eb;
   --purple-light: #3a4a8a;
-  
+
   /* Status colors - adjusted */
   --fav-color: #e6b87d;
   --new-color: #e67d7d;
@@ -56,7 +60,11 @@
   --salary-color: #7dc46d;
   --default-color: #666666;
   --red-color: #e65e5e;
-  
+
+  /* Vacancy title color - adjusted for dark */
+  --vacancy-title-color: #b8b8b8;
+  --vacancy-title-hover: #a8c8ff;
+
   /* Special */
   --highlight-bg: #5a5a30;
   --shadow-color: rgba(0, 0, 0, 0.3);

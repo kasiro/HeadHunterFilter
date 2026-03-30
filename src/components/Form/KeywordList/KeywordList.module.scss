@@ -5,11 +5,25 @@
   align-items: center;
   gap: 6px;
   margin-right: 10px;
+  margin-bottom: 8px;
   padding: 5px 10px;
   border-radius: 13px;
   background-color: $backgroundColor;
   transition: background-color .2s, color .2s;
   cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: $customPurple;
+    color: #fff;
+  }
+}
+
+/* Excluded words (unnecessary) - distinct red styling */
+.filterParam--excluded {
+  composes: filterParam;
+  background-color: rgba(246, 123, 123, 0.15);
+  border: 1px solid rgba(246, 123, 123, 0.3);
 
   &:hover {
     background-color: $customRed;
@@ -17,16 +31,72 @@
   }
 }
 
-.keywordApplyToBadge {
-  padding: 2px 6px;
-  font-size: 11px;
-  border: 1px solid $borderColor;
-  border-radius: 8px;
-  background: #fff;
-  cursor: pointer;
-  outline: none;
+/* Keywords (necessary) - purple styling */
+.filterParam--keyword {
+  composes: filterParam;
+  background-color: rgba(94, 114, 235, 0.1);
+  border: 1px solid rgba(94, 114, 235, 0.2);
 
   &:hover {
-    border-color: $customPurple;
+    background-color: $customPurple;
+    color: #fff;
   }
+}
+
+.keywordApplyToBadge {
+  padding: 2px 6px;
+  padding-right: 20px;
+  font-size: 11px;
+  font-family: inherit;
+  border: 1px solid var(--border-color, $borderColor);
+  border-radius: 6px;
+  background: var(--bg-tertiary, #fff);
+  color: var(--text-primary, #000);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%235E72EB' d='M5 8L0 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  transition: border-color .2s, box-shadow .2s;
+
+  &:hover {
+    border-color: var(--purple-primary, $customPurple);
+  }
+  
+  &:focus {
+    border-color: var(--purple-primary, $customPurple);
+    box-shadow: 0 0 0 2px rgba(94, 114, 235, 0.2);
+  }
+}
+
+/* Exclusion badge indicator */
+.exclusionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  border-radius: 50%;
+  background-color: $customRed;
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Group badge */
+.groupBadge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: var(--purple-primary, $customPurple);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }

@@ -364,19 +364,28 @@
   bottom: 8px;
   right: 62px;
   padding: 6px 8px;
+  padding-right: 24px;
   font-size: 13px;
-  border: 1px solid $borderColor;
-  border-radius: 4px;
-  background: #fff;
+  font-family: inherit;
+  border: 1px solid var(--border-color, $borderColor);
+  border-radius: 6px;
+  background: var(--bg-tertiary, #fff);
+  color: var(--text-primary, #000);
   cursor: pointer;
   outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%235E72EB' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  transition: border-color .2s, box-shadow .2s;
 
   &:hover {
-    border-color: $customPurple;
+    border-color: var(--purple-primary, $customPurple);
   }
 
   &:focus {
-    border-color: $customPurple;
+    border-color: var(--purple-primary, $customPurple);
+    box-shadow: 0 0 0 2px rgba(94, 114, 235, 0.2);
   }
 }
 
@@ -448,7 +457,7 @@
   transition: background .3s;
 
   &:hover {
-    background: darken($customPurple, 10%);
+    background: #495fe4;
   }
 
   &:disabled {
@@ -596,7 +605,7 @@
   }
 
   &:hover {
-    background: darken($customPurple, 10%);
+    background: #495fe4;
   }
 
   &:disabled {
@@ -698,7 +707,7 @@
     transition: background .3s;
 
     &:hover {
-      background: darken($customPurple, 10%);
+      background: #495fe4;
     }
   }
 }
@@ -741,7 +750,7 @@
   transition: background .3s;
 
   &:hover {
-    background: darken($customPurple, 10%);
+    background: #495fe4;
   }
 }
 

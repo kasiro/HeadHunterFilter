@@ -119,3 +119,15 @@ export const toggleGroupEnabled = (groupId) => (dispatch, getState) => {
   dispatch({ type: types.TOGGLE_GROUP_ENABLED, groups });
   dispatch(filterVacancies());
 };
+
+// Action to remove exclusion group reference from keywords (necessary/unnecessary)
+export const deleteExclusionGroupFromKeywords = (keywordType, groupName) => (dispatch, getState) => {
+  const keywords = [...getState().form[keywordType]].filter((kw) => {
+    const kwWord = typeof kw === 'string' ? kw : kw.word;
+    return kwWord !== groupName;
+  });
+
+  dispatch({ type: types.CHANGE_KEYWORDS, keywordType, keywords });
+  dispatch(filterVacancies());
+};
+

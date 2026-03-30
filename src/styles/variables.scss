@@ -1,30 +1,30 @@
 @import './media';
 
-/* Colors */
-$textColor: black;
-$inactiveText: #a7a7a7;
-$linkColor: #8b8585;
-$favColor: #fccea6;
-$newColor: #f49c9c;
+/* Colors - mapped to CSS Custom Properties for theme support */
+$textColor: var(--text-primary, black);
+$inactiveText: var(--text-secondary, #a7a7a7);
+$linkColor: var(--link-color, #8b8585);
+$favColor: var(--fav-color, #fccea6);
+$newColor: var(--new-color, #f49c9c);
 
 // $test1: #a7a7a7;
 
-$junColor: #88e7d6;
-$exp3Color: #a3d0f3;
-$exp6Color: #a0acf6;
+$junColor: var(--jun-color, #88e7d6);
+$exp3Color: var(--exp3-color, #a3d0f3);
+$exp6Color: var(--exp6-color, #a0acf6);
 
-$salaryColor: #abd59f;
+$salaryColor: var(--salary-color, #abd59f);
 
-$defaultColor: #b3b3b3;
-$customRed: #f67b7b;
+$defaultColor: var(--default-color, #b3b3b3);
+$customRed: var(--red-color, #f67b7b);
 
-$customPurple: #5E72EB;
-$customPurpleH: #495fe4;
-$customPurpleL: #CFD4F0;
+$customPurple: var(--purple-primary, #5E72EB);
+$customPurpleH: var(--purple-dark, #495fe4);
+$customPurpleL: var(--purple-light, #CFD4F0);
 
-$backgroundColor: #F4F7FC;
-$backgroundColorL: #FDFDFD;
-$borderColor: #EEEFF5;
+$backgroundColor: var(--bg-primary, #F4F7FC);
+$backgroundColorL: var(--bg-secondary, #FDFDFD);
+$borderColor: var(--border-color, #EEEFF5);
 
 /* Variables */
 $shadowParams: 0 0 10px;
