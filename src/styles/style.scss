@@ -1,0 +1,54 @@
+@import './media';
+@import './variables.scss';
+
+* {
+  font-family: 'Roboto';
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1 {
+  margin: 0;
+}
+
+.main {
+  display: flex;
+  min-height: 100vh;
+  min-width: 375px;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+button {
+  cursor: pointer;
+}
+[disabled],
+.disabled {
+  pointer-events: none;
+}
+
+.container {
+  width: 100%;
+  /*max-width: 1280px;*/
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 $containerPHDesktop;
+
+  @media ($tabletP) {
+    padding: 0 $containerPHTablet;
+  }
+}

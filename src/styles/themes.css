@@ -1,0 +1,63 @@
+/* CSS Custom Properties для тем */
+
+:root {
+  /* Light theme (default) */
+  --bg-primary: #F4F7FC;
+  --bg-secondary: #FDFDFD;
+  --bg-tertiary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #a7a7a7;
+  --link-color: #8b8585;
+  --link-hover: cornflowerblue;
+  --border-color: #EEEFF5;
+  
+  /* Brand colors */
+  --purple-primary: #5E72EB;
+  --purple-dark: #495fe4;
+  --purple-light: #CFD4F0;
+  
+  /* Status colors */
+  --fav-color: #fccea6;
+  --new-color: #f49c9c;
+  --jun-color: #88e7d6;
+  --exp3-color: #a3d0f3;
+  --exp6-color: #a0acf6;
+  --salary-color: #abd59f;
+  --default-color: #b3b3b3;
+  --red-color: #f67b7b;
+  
+  /* Special */
+  --highlight-bg: #ffff90;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme {
+  /* Dark theme */
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --bg-tertiary: #0f3460;
+  --text-primary: #eaeaea;
+  --text-secondary: #a0a0a0;
+  --link-color: #b8b8b8;
+  --link-hover: #a8c8ff;
+  --border-color: #2a2a4a;
+  
+  /* Brand colors - adjusted for dark */
+  --purple-primary: #7b8ef5;
+  --purple-dark: #5e72eb;
+  --purple-light: #3a4a8a;
+  
+  /* Status colors - adjusted */
+  --fav-color: #e6b87d;
+  --new-color: #e67d7d;
+  --jun-color: #7dd6c5;
+  --exp3-color: #7db8e6;
+  --exp6-color: #7d8ae6;
+  --salary-color: #7dc46d;
+  --default-color: #666666;
+  --red-color: #e65e5e;
+  
+  /* Special */
+  --highlight-bg: #5a5a30;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}

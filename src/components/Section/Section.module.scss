@@ -1,0 +1,32 @@
+@import "../../styles/variables";
+
+.loadingTitle {
+  margin: 10px 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 20px 0 0;
+  background-color: #ffffff;
+}
+
+.fewExpAlert {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.loader {
+  height: 14px;
+  border-radius: 10px;
+  background-color: #fff;
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background-color: $customPurpleH;
+    transition: .2s ease-in;
+  }
+}

@@ -1,0 +1,539 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable camelcase */
+import * as types from '../types/regions';
+import {
+  createimprintFav,
+  // hideLoader,
+  loading,
+  updateGroupsVisibility,
+  changeHaveArchived,
+  setSalaryStat,
+} from './app';
+import { cloneObj, parseDateString } from '../../helpers';
+import { JUNIOR } from '../../constants/common';
+import { IS_LOCAL_DATA } from '../../main';
+
+export const changeActiveSection = (id) => (dispatch, getState) => {
+  const { regions } = getState();
+
+  regions.forEach((section) => {
+    section.isActive = section.id === id;
+
+    if (section.isActive && !section.allVacancies) {
+      dispatch(loading());
+    }
+  });
+
+  dispatch({ type: types.UPDATE_DATA, regions });
+};
+
+export const changeSelectedRegions = (regions) => (dispatch) => {
+  const activeSection = regions.find((region) => region.isActive);
+  const isActiveRegionChanged = !activeSection.checked;
+  let section = activeSection;
+
+  /* Регион новый */
+  if (isActiveRegionChanged) {
+    let newActive;
+
+    regions.forEach((region) => {
+      if (!newActive && region.checked) {
+        newActive = region;
+      } else {
+        region.isActive = false;
+      }
+    });
+
+    newActive.isActive = true;
+    section = newActive;
+
+    dispatch({ type: types.UPDATE_DATA, regions });
+  }
+
+  dispatch(loading());
+  dispatch(loadData(section));
+};
+
+export const toggleGroupVisibility = (sectionId, groupId) => (dispatch, getState) => {
+  const { regions } = getState();
+  dispatch(loading());
+
+  const currentSection = regions.find((section) => section.id === sectionId);
+
+  const group = currentSection.groups[groupId];
+  group.isHidden = !group.isHidden;
+
+  dispatch(updateGroupsVisibility(currentSection.id, groupId, group.isHidden));
+  dispatch(visibleVacanciesUpdate(currentSection.id, regions, groupId));
+};
+
+const createSalaryText = (salary) => {
+  if (!salary) return null;
+
+  const { currency } = salary;
+  const formatValue = (value) => Math.round(value).toLocaleString();
+
+  const step = () => {
+    const { from = 0, to = 0 } = salary;
+
+    const symbol = (() => {
+      switch (currency) {
+        case 'RUR':
+          return 'Р';
+        case 'USD':
+          return '$';
+        default:
+          return currency;
+      }
+    })();
+
+    return (
+      `${!to && from ? 'от ' : ''}${from ? formatValue(from) : 'до '}${(from && to) ? ' - ' : ''}${to ? formatValue(to) : ''} ${symbol}`
+    );
+  };
+
+  const salaryMain = step();
+
+  return [salaryMain, ''];
+};
+
+const formatVacancy = ({
+  id,
+  name,
+  alternate_url,
+  created_at,
+  salary,
+  employer,
+  snippet,
+  exp3,
+  exp6,
+  isJun,
+  archived,
+}) => ({
+  id,
+  name,
+  alternateUrl: alternate_url,
+  createdAt: created_at,
+  salary: {
+    component: createSalaryText(salary),
+    ...salary,
+  },
+  employer: {
+    id: employer.id,
+    name: employer.name,
+    logoUrl: employer.logo_urls?.['90'],
+  },
+  exp3,
+  exp6,
+  isJun,
+  archived,
+  snippet: snippet.requirement,
+});
+
+export const filterVacancies = (
+  presetVacancies,
+  setAllVacancies = false,
+  keywordValidation = true,
+) => async (dispatch, getState) => {
+  dispatch(loading());
+
+  const { form, regions, app } = getState();
+  const {
+    favorites, blacklist, minSalary, hiddenGroups, isSalaryOnly,
+  } = app;
+  const currentSection = regions.find((section) => section.isActive);
+
+  if (setAllVacancies) {
+    currentSection.allVacancies = [];
+  }
+
+  const vacancies = presetVacancies || currentSection.allVacancies;
+
+  if (!vacancies) return;
+
+  const sortParams = {
+    default: {
+      name: 'default',
+      sortValue: currentSection.groups.default.sortValue,
+    },
+    isFav: {
+      name: 'isFav',
+      sortValue: currentSection.groups.isFav.sortValue,
+    },
+  };
+
+  const toRegExp = (arr) => new RegExp(arr.join('|'), 'i');
+
+  // Проверка ключевых слов с учётом applyTo
+  const checkKeyword = (vacancy, keywords, isNecessary) => {
+    if (!keywords || !keywords.length) {
+      return true; // Если нет keywords - пропускаем вакансию (нет требований/исключений)
+    }
+
+    const titleText = `${vacancy.name} ${vacancy.employer.name}`;
+    const descriptionText = vacancy.snippet?.requirement || '';
+
+    let hasMatch = false;
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const keyword of keywords) {
+      const { word, applyTo } = typeof keyword === 'string' ? { word: keyword, applyTo: 'both' } : keyword;
+
+      const checkTitle = applyTo === 'title' || applyTo === 'both';
+      const checkDescription = applyTo === 'description' || applyTo === 'both';
+
+      const textToCheck = `${checkTitle ? titleText : ''} ${checkDescription ? descriptionText : ''}`.trim();
+
+      if (textToCheck) {
+        const regex = new RegExp(word, 'i');
+        if (textToCheck.match(regex)) {
+          hasMatch = true;
+          break;
+        }
+      }
+    }
+
+    return isNecessary ? hasMatch : !hasMatch;
+  };
+
+  const validNecessary = (vacancy) => checkKeyword(vacancy, form.necessary, true);
+  const validUnnecessary = (vacancy) => checkKeyword(vacancy, form.unnecessary, false);
+
+  // Check exclusion groups
+  const checkExclusionGroups = (vacancy, groups) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const group of groups) {
+      if (!group.isEnabled || !group.words.length) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+
+      const checkTitle = group.applyTo === 'title' || group.applyTo === 'both';
+      const checkDescription = group.applyTo === 'description' || group.applyTo === 'both';
+
+      const titleText = checkTitle ? `${vacancy.name} ${vacancy.employer.name}` : '';
+      const descriptionText = checkDescription ? (vacancy.snippet?.requirement || '') : '';
+      const textToCheck = `${titleText} ${descriptionText}`.trim();
+
+      const groupRegex = toRegExp(group.words);
+      if (textToCheck.match(groupRegex)) {
+        return false; // Exclude vacancy
+      }
+    }
+    return true;
+  };
+
+  const newInDays = form.newInDays.find((option) => option.checked);
+  const lastValidDate = new Date(new Date() - (+newInDays.value * 24 * 60 * 60 * 1000));
+
+  const companies = {};
+  const salaryArr = [];
+  const filteredVacancies = [];
+
+  vacancies.forEach((vacancy) => {
+    vacancy = vacancy.createdAt ? vacancy : formatVacancy(vacancy);
+    const employerId = vacancy.employer.id;
+    const isFav = favorites?.includes(employerId);
+    const companySort = sortParams[isFav ? 'isFav' : 'default'];
+
+    const someVacancyHaveParam = (param) => companies[employerId].vacancies.some((companyVacancy) => {
+      return companyVacancy[param] === vacancy[param];
+    });
+
+    // eslint-disable-next-line no-prototype-builtins
+    if (!companies.hasOwnProperty(employerId)) {
+      companies[employerId] = {
+        id: employerId,
+        name: vacancy.employer.name,
+        sort: companySort,
+        vacancies: [],
+        archived: [],
+      };
+    } else if (someVacancyHaveParam('name')) {
+      return;
+    }
+
+    if (vacancy.archived) {
+      companies[employerId].archived.push(vacancy.id);
+      dispatch(changeHaveArchived(true));
+    }
+
+    if (setAllVacancies) {
+      currentSection.allVacancies.push(vacancy);
+    }
+
+    if (keywordValidation) {
+      if (!(validNecessary(vacancy) && validUnnecessary(vacancy))) { return; }
+
+      // Check exclusion groups
+      if (!checkExclusionGroups(vacancy, form.exclusionGroups || [])) { return; }
+    }
+
+    if (isSalaryOnly && !vacancy.salary?.from) {
+      return;
+    }
+
+    if (vacancy.salary?.currency === 'RUR' && minSalary) {
+      if (vacancy.salary?.to < minSalary && vacancy.salary.from < minSalary) return;
+    }
+
+    const company = companies[employerId];
+    vacancy.sort = sortParams.default;
+
+    /* Проверка на наличие в блеклисте */
+    if (blacklist.includes(vacancy.id)) return;
+
+    /* Недавняя вакансия в пределах диапазона NEW_IN DAYS */
+    if (parseDateString(vacancy.createdAt) > lastValidDate) {
+      setSortParams(5, 'isNew');
+    }
+
+    /* Опыт > 6 лет */
+    if (vacancy.exp6) {
+      setSortParams(4, 'exp6');
+    }
+
+    /* Опыт 3 - 6 лет */
+    if (vacancy.exp3) {
+      setSortParams(3, 'exp3');
+    }
+
+    /* Вакансия без опыта */
+    if (vacancy.isJun || vacancy.name.match(JUNIOR)) {
+      setSortParams(2, 'isJun');
+    }
+
+    /* В вакансии указана зп */
+    if (vacancy?.salary?.component) {
+      if (vacancy.salary.currency === 'RUR') {
+        salaryArr.push(vacancy.salary);
+      }
+
+      setSortParams(1, 'isSalary');
+    }
+
+    function setSortParams(sortValue, paramName) {
+      const sort = {
+        name: paramName,
+        sortValue,
+      };
+
+      if (company.sort.sortValue < sortValue) {
+        company.sort = sort;
+      }
+
+      if (vacancy.sort.sortValue < sortValue) {
+        vacancy.sort = sort;
+      }
+
+      if (paramName === 'isNew') {
+        company[paramName] = true;
+      }
+
+      vacancy[paramName] = true;
+    }
+
+    company.vacancies.push(vacancy);
+    filteredVacancies.push(vacancy);
+  });
+
+  currentSection.groups = groupCompanies(Object.values(companies));
+  currentSection.vacancies = filteredVacancies;
+
+  if (salaryArr.length) {
+    dispatch(setSalaryStat(salaryArr));
+  }
+  dispatch(visibleVacanciesUpdate(currentSection.id, regions));
+
+  function groupCompanies(companies) {
+    const groups = cloneObj(currentSection.groups);
+
+    // eslint-disable-next-line guard-for-in,no-restricted-syntax
+    for (const groupName in groups) {
+      const group = groups[groupName];
+      group.isHidden = hiddenGroups[currentSection.id].includes(groupName);
+
+      group.companies = [];
+    }
+
+    companies.forEach((company) => {
+      if (!company.vacancies.length) { return; }
+
+      const { companies } = groups[company.sort.name];
+
+      if (company.isNew) {
+        companies.unshift(company);
+      } else {
+        companies.push(company);
+      }
+    });
+
+    return groups;
+  }
+};
+
+let loadingData = false;
+
+export const loadData = (section) => async (dispatch, getState) => {
+  const { form, app } = getState();
+
+  const request = JSON.stringify([form.name, section.location, form.experience]);
+
+  // if(section.prevRequest && section.prevRequest === request) {
+  //     if(updateRegions)
+  //         dispatch({ type: types.UPDATE_DATA, regions });
+  //
+  //     dispatch(hideLoader());
+  //     return;
+  // }
+
+  if (loadingData) return;
+
+  if (!section.prevRequest && section.prevRequest === request) {
+    // dispatch(hideLoader());
+    return;
+  }
+
+  loadingData = true;
+
+  section.prevRequest = request;
+
+  const newVacancies = await getVacancies();
+
+  const withNewOne = await checkArchivedVacancies(section.id, newVacancies, app.imprintFav);
+
+  dispatch(filterVacancies(withNewOne, true));
+
+  loadingData = false;
+
+  async function getVacancies() {
+    const experience = form.experience.filter((exp) => exp.checked);
+    const result = [];
+    let progress = 0;
+    let step = 100 / experience.length;
+
+    const calcProgress = (pageVeight) => {
+      progress += pageVeight;
+      dispatch(loading(progress));
+    };
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const exp of experience) {
+      let expResult = [];
+      step = 100 / experience.length;
+      // eslint-disable-next-line prefer-const,no-await-in-loop
+      let { vacancies, pagesLeft } = await getVacanciesStep(0, exp.id);
+      const pageVeight = step / pagesLeft;
+
+      calcProgress(pageVeight);
+
+      expResult.push(...vacancies);
+
+      // eslint-disable-next-line no-plusplus
+      while (--pagesLeft > 0) {
+        calcProgress(pageVeight);
+        // eslint-disable-next-line no-await-in-loop
+        const { vacancies } = await getVacanciesStep(pagesLeft, exp.id);
+
+        if (!vacancies) break;
+
+        expResult.push(...vacancies);
+      }
+
+      expResult = expResult.map((vacancy) => {
+        vacancy[exp.modifier] = true;
+        return vacancy;
+      });
+
+      result.push(...expResult);
+    }
+
+    return result;
+  }
+  async function getVacanciesStep(pageNum, exp) {
+    try {
+      const fetchUrl = IS_LOCAL_DATA
+        ? 'http://localhost:5000/api/data'
+        : `https://api.hh.ru/vacancies?text=${form.name}&${section.location}&per_page=100&page=${pageNum}&experience=${exp}`;
+      const response = await fetch(fetchUrl);
+
+      const json = await response.json();
+
+      return {
+        vacancies: json.items,
+        pagesLeft: json.pages,
+      };
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+
+    return null;
+  }
+};
+
+export const visibleVacanciesUpdate = (changedSectionId, newRegionsData, groupId = null) => (dispatch, getState) => {
+  const { showArchived } = getState().app;
+  const regions = cloneObj(newRegionsData);
+  const currentSection = regions.find((section) => section.id === changedSectionId);
+
+  const reduceVacancy = (companies) => companies.reduce((visibleInCompanies, company) => {
+    return visibleInCompanies + company.vacancies.filter((vacancy) => {
+      return !vacancy.isDel && (!vacancy.archived || showArchived);
+    }).length;
+  }, 0);
+
+  let result;
+
+  if (groupId) {
+    const group = currentSection.groups[groupId];
+    const modifier = group.isHidden ? -1 : 1;
+
+    result = currentSection.visibleVacancies + (reduceVacancy(group.companies) * modifier);
+  } else {
+    result = Object.values(currentSection.groups).reduce((visibleInGroup, group) => {
+      if (!group.isHidden) {
+        visibleInGroup += reduceVacancy(group.companies);
+      }
+
+      return visibleInGroup;
+    }, 0);
+  }
+
+  currentSection.visibleVacancies = result;
+
+  dispatch({ type: types.UPDATE_DATA, regions });
+  dispatch(createimprintFav(regions));
+  // dispatch(hideLoader());
+};
+
+export const checkArchivedVacancies = async (sectionId, vacancies, imprintFav) => {
+  const currentImprint = imprintFav.find((imprint) => imprint.id === sectionId);
+
+  if (!currentImprint) {
+    return vacancies;
+  }
+
+  // const promises = currentImprint.vacancies.filter(async (imprintedVacancy) => {
+  const promises = currentImprint.vacancies.map(async (imprintedVacancy) => {
+    if (!vacancies.some((vacancy) => vacancy.id === imprintedVacancy.id)) {
+      imprintedVacancy.archived = true;
+      // const fetchUrl = IS_LOCAL_DATA
+      //   ? `http://localhost:5000/api/vacancies/${imprintedVacancy.id}`
+      //   : `https://api.hh.ru/api/vacancies/${imprintedVacancy.id}`;
+      // const response = await fetch(fetchUrl);
+      // const json = await response.json();
+
+      // if (json.archived) {
+      //   return imprintedVacancy;
+      // }
+      return imprintedVacancy;
+    }
+
+    return null;
+  });
+
+  const archived = await Promise.all(promises);
+
+  return [...vacancies, ...archived.filter(Boolean)];
+};
