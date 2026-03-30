@@ -46,7 +46,6 @@ export function ExclusionGroupItem(props: ExclusionGroupItemWithEditProps) {
             className={styles.groupCheckbox}
             data-tip={TOOLTIPS.groupEnabled}
           />
-          <ReactTooltip />
           <span className={styles.groupName}>{group.name}</span>
           <span className={styles.groupApplyTo}>{getApplyToLabel(group.applyTo)}</span>
           <span className={styles.wordsCount}>
@@ -65,7 +64,6 @@ export function ExclusionGroupItem(props: ExclusionGroupItemWithEditProps) {
           >
             <Edit />
           </button>
-          <ReactTooltip />
           <button
             type="button"
             className={styles.btnIcon}
@@ -74,7 +72,6 @@ export function ExclusionGroupItem(props: ExclusionGroupItemWithEditProps) {
           >
             <Trash />
           </button>
-          <ReactTooltip />
         </div>
       </div>
 
@@ -87,11 +84,9 @@ export function ExclusionGroupItem(props: ExclusionGroupItemWithEditProps) {
                 type="button"
                 className={styles.btnRemoveWord}
                 onClick={() => props.onRemoveWord(group.id, word)}
-                data-tip={TOOLTIPS.removeWord}
               >
                 <X />
               </button>
-              <ReactTooltip />
             </span>
           ))}
         </div>
@@ -115,8 +110,9 @@ export function ExclusionGroupItem(props: ExclusionGroupItemWithEditProps) {
         >
           <Plus />
         </button>
-        <ReactTooltip />
       </div>
+
+      <ReactTooltip />
     </div>
   );
 }

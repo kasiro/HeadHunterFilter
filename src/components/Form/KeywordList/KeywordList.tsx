@@ -50,7 +50,8 @@ function KeywordList({ keywordType, keywordsList, deleteKeyword, updateKeywordAp
         keywordsList.map((keyWord) => {
           const group = findGroupByKeyword(keyWord);
           const isGroup = !!group;
-          
+          const wordId = getWord(keyWord).replace(/\s+/g, '-');
+
           return (
             <span
               key={getWord(keyWord)}
@@ -58,6 +59,7 @@ function KeywordList({ keywordType, keywordsList, deleteKeyword, updateKeywordAp
               onClick={() => handleDelete(keyWord)}
               data-tip={isGroup && group ? `Группа: ${group.words.join(', ')}` : undefined}
               data-effect="solid"
+              data-for={`keyword-tooltip-${keywordType.id}-${wordId}`}
             >
               {getWord(keyWord)}
               {isGroup && (
@@ -81,7 +83,7 @@ function KeywordList({ keywordType, keywordsList, deleteKeyword, updateKeywordAp
           );
         })
       }
-      <ReactTooltip />
+      <ReactTooltip id={`keyword-tooltip-${keywordType.id}`} />
     </>
   );
 }
