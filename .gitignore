@@ -1,5 +1,6 @@
 .idea
 .vscode
+.qwen
 
 # dependencies
 /node_modules
