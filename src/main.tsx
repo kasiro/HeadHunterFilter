@@ -6,14 +6,14 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import rootReducer from './redux/reducers';
 // import {createLogger} from 'redux-logger';
-import { setLS } from './helpers';
+import { setLS, getLS } from './helpers';
 import App from './App';
 import './styles/themes.css';
 import './styles/style.scss';
 import { BaseFormFields } from './types/initialParams.types';
 
-// Загрузка темы из localStorage
-const savedTheme = localStorage.getItem('theme');
+// Загрузка темы из localStorage ДО инициализации Redux
+const savedTheme = getLS('theme') || 'light';
 if (savedTheme === 'dark') {
   document.documentElement.classList.add('dark-theme');
 }
@@ -49,6 +49,7 @@ store.subscribe(() => {
       hiddenGroups,
       imprintFav,
       minSalary,
+      theme,
     },
   } = store.getState();
 
@@ -58,6 +59,7 @@ store.subscribe(() => {
   setLS(BaseFormFields.imprintFav, imprintFav);
   setLS(BaseFormFields.minSalary, minSalary);
   setLS('lastTimeDaysAgo', new Date());
+  setLS('theme', theme); // Сохраняем тему при изменении
 });
 
 ReactDOM.render(

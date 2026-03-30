@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setLS, getLS } from '../../helpers';
 import { BaseFormFields } from '../../types/initialParams.types';
+import { toggleTheme as toggleThemeAction } from '../../redux/actions/app';
 import styles from './Settings.module.scss';
 import { SettingsState, ExportData } from './Settings.types';
 
 interface SettingsProps {
   theme: 'light' | 'dark';
+  toggleTheme: () => void;
 }
 
-function Settings({ theme }: SettingsProps) {
+function Settings({ theme, toggleTheme }: SettingsProps) {
   const [settings, setSettings] = useState<SettingsState>({
     theme: theme,
     filterDefaults: {
@@ -48,12 +50,13 @@ function Settings({ theme }: SettingsProps) {
     }));
   }, [theme]);
 
-  // Theme toggle handler
+  // Theme toggle handler - uses Redux action
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
     const isDark = newTheme === 'dark';
     document.documentElement.classList.toggle('dark-theme', isDark);
     localStorage.setItem('theme', newTheme);
     setSettings(prev => ({ ...prev, theme: newTheme }));
+    toggleTheme(); // Dispatch Redux action to sync state
   };
 
   // Filter defaults handlers
@@ -331,4 +334,8 @@ const mapStateToProps = ({ app }: { app: { theme: 'light' | 'dark' } }) => ({
   theme: app.theme,
 });
 
-export default connect(mapStateToProps)(Settings);
+const mapDispatchToProps = {
+  toggleTheme: toggleThemeAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
