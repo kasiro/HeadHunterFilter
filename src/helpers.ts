@@ -8,7 +8,18 @@ import { BaseFormFields, NewInDays, Keyword } from './types/initialParams.types'
 
 /* Storage actions */
 export const setLS: SetLocalStorage = (key, payload) => localStorage.setItem(key, JSON.stringify(payload));
-export const getLS: GetLocalStorage = (key) => JSON.parse(localStorage.getItem(key) as string);
+export const getLS: GetLocalStorage = (key) => {
+  try {
+    const item = localStorage.getItem(key);
+    if (!item) return null;
+    return JSON.parse(item);
+  } catch (e) {
+    // If parsing fails, return null and clean up corrupted data
+    console.warn(`Failed to parse localStorage item "${key}":`, e);
+    localStorage.removeItem(key);
+    return null;
+  }
+};
 
 export const getDataFromStorage: GetDataFromStorage = (type: string, regions) => {
   try {
