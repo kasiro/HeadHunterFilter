@@ -4,7 +4,7 @@
   min-height: 117px;
   padding: 20px 20px;
   border: 2px solid transparent;
-  border-radius: $commonBorderRadius;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
   background-color: var(--bg-tertiary, #fff);
   transition: background-color 0.2s, border-color 0.2s;
 
@@ -24,7 +24,7 @@
   cursor: pointer;
 
   &:hover h2 {
-    color: $favColor;
+    color: var(--fav-color, $favColor);
   }
 
   h2 {

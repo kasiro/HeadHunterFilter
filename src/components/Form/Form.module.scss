@@ -18,6 +18,7 @@
   margin-bottom: 15px;
   align-items: center;
   font-weight: 500;
+  color: var(--text-primary, $textColor);
 
   /* info icon */
   svg {
@@ -27,12 +28,12 @@
     &:hover {
 
       *:not(g) {
-        fill: $customPurple;
+        fill: var(--purple-primary, $customPurple);
       }
     }
 
     *:not(g) {
-      fill: $defaultColor;
+      fill: var(--default-color, $defaultColor);
       transition: fill .4s;
     }
   }
@@ -49,7 +50,7 @@
   transition: opacity .2s;
 
   *:not(g) {
-    fill: $customRed  !important;
+    fill: var(--error, $customRed)  !important;
   }
 }
 
@@ -92,7 +93,7 @@
 
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 2px solid #EEEFF5;
+  border-top: 2px solid var(--border-color, #EEEFF5);
 }
 
 .item {
@@ -132,22 +133,25 @@
   width: 100%;
   height: 54px;
   padding: 10px 20px;
-  border-radius: $commonBorderRadius;
-  border: 2px solid $borderColor;
-  background-color: $backgroundColor;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
+  border: 2px solid var(--border-color, $borderColor);
+  background-color: var(--bg-primary, $backgroundColor);
+  color: var(--text-primary, $textColor);
   font-size: 18px;
-  transition: background-color .2s;
+  transition: background-color .2s, border-color .2s;
 
   &::placeholder {
-    color: lightgray;
+    color: var(--text-secondary, lightgray);
   }
 
   &:focus {
-    background-color: #fff;
+    background-color: var(--bg-tertiary, #fff);
+    border-color: var(--purple-primary, $customPurple);
   }
 
   &[disabled] {
     opacity: .6;
+    background-color: var(--bg-secondary, $backgroundColorL);
   }
 }
 
@@ -191,12 +195,12 @@
   align-items: center;
   justify-content: center;
   padding: 14px 53px;
-  border: 2px solid $borderColor;
-  border-radius: $commonBorderRadius;
-  background: $customPurple;
+  border: 2px solid var(--border-color, $borderColor);
+  border-radius: var(--common-border-radius, $commonBorderRadius);
+  background: var(--purple-primary, $customPurple);
   font-size: 16px;
   font-weight: 500;
-  color: #fff;
+  color: var(--text-primary, #fff);
   white-space: nowrap;
   transition: background-color .4s, color .4s, opacity .2s, transform .2s;
 
@@ -206,6 +210,10 @@
 
   &:active {
     transform: scale(.97);
+  }
+
+  &:hover {
+    background: var(--purple-dark, $customPurpleH);
   }
 
   svg {
@@ -234,19 +242,19 @@
   align-self: flex-end;
   margin-left: 10px;
   padding: 17px 20px;
-  background-color: $backgroundColorL;
-  border: 2px solid $borderColor;
+  background-color: var(--bg-secondary, $backgroundColorL);
+  border: 2px solid var(--border-color, $borderColor);
   font-size: 16px;
-  color: $customPurple;
+  color: var(--purple-primary, $customPurple);
 
   &:hover {
-    background-color: $customPurple;
-    color: #fff;
+    background-color: var(--purple-primary, $customPurple);
+    color: var(--text-primary, #fff);
 
     svg {
 
       *:not(g) {
-        fill: #fff;
+        fill: var(--text-primary, #fff);
       }
     }
   }
@@ -256,7 +264,7 @@
   }
 
   &[disabled] {
-    background-color: $backgroundColor;
+    background-color: var(--bg-primary, $backgroundColor);
   }
 }
 
@@ -266,9 +274,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $backgroundColorL;
-  border: 2px solid $borderColor;
-  border-radius: $commonBorderRadius;
+  background-color: var(--bg-secondary, $backgroundColorL);
+  border: 2px solid var(--border-color, $borderColor);
+  border-radius: var(--common-border-radius, $commonBorderRadius);
   transition: background-color .4s, transform .2s;
 
   &[disabled] {
@@ -280,12 +288,12 @@
   }
 
   &:hover {
-    background-color: $customPurple;
+    background-color: var(--purple-primary, $customPurple);
 
     svg {
 
       *:not(g) {
-        fill: #fff;
+        fill: var(--text-primary, #fff);
       }
     }
   }
@@ -311,9 +319,10 @@
   align-items: center;
   white-space: nowrap;
   cursor: pointer;
+  color: var(--text-primary, $textColor);
 
   &:hover {
-    color: $customPurple;
+    color: var(--purple-primary, $customPurple);
   }
 
   input {
@@ -324,8 +333,8 @@
       min-width: 16px;
       min-height: 16px;
       margin-right: 15px;
-      border: 1px solid $customPurple;
-      border-radius: 3px;
+      border: 1px solid var(--purple-primary, $customPurple);
+      border-radius: 13px;
       align-items: center;
       position: relative;
 
@@ -336,8 +345,8 @@
         right: 0;
         bottom: 0;
         left: 0;
-        border-radius: 3px;
-        background-color: $customPurple;
+        border-radius: 13px;
+        background-color: var(--purple-primary, $customPurple);
         transform: scale(0);
         transition: transform .4s;
       }
@@ -368,7 +377,7 @@
   font-size: 13px;
   font-family: inherit;
   border: 1px solid var(--border-color, $borderColor);
-  border-radius: 6px;
+  border-radius: 13px;
   background: var(--bg-tertiary, #fff);
   color: var(--text-primary, #000);
   cursor: pointer;
@@ -398,10 +407,10 @@
   width: 54px;
   justify-content: center;
   align-items: center;
-  border-radius: $commonBorderRadius;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
   border: none;
-  background-color: $customPurple;
-  color: #fff;
+  background-color: var(--purple-primary, $customPurple);
+  color: var(--text-primary, #fff);
   font-size: 30px;
   font-weight: 700;
 
@@ -417,11 +426,11 @@
   background: transparent;
   font-size: 16px;
   font-weight: 500;
-  color: $customPurple;
+  color: var(--purple-primary, $customPurple);
   transition: color .4s;
 
   &:hover {
-    color: $customRed;
+    color: var(--error, $customRed);
   }
 }
 
@@ -430,7 +439,7 @@
   width: 100%;
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px solid $borderColor;
+  border-top: 1px solid var(--border-color, $borderColor);
 }
 
 .exclusionGroupsHeader {
@@ -448,20 +457,20 @@
 
 .btnAddGroup {
   padding: 8px 16px;
-  background: $customPurple;
-  color: #fff;
+  background: var(--purple-primary, $customPurple);
+  color: var(--text-primary, #fff);
   border: none;
-  border-radius: 4px;
+  border-radius: 13px;
   cursor: pointer;
   font-size: 14px;
   transition: background .3s;
 
   &:hover {
-    background: #495fe4;
+    background: var(--purple-dark, #495fe4);
   }
 
   &:disabled {
-    background: $borderColor;
+    background: var(--border-color, $borderColor);
     cursor: not-allowed;
   }
 }
@@ -474,18 +483,19 @@
 
 .exclusionGroupItem {
   padding: 15px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  border: 1px solid $borderColor;
+  background: var(--bg-secondary, #f8f9fa);
+  border-radius: 13px;
+  border: 1px solid var(--border-color, $borderColor);
   transition: all .3s;
+  color: var(--text-primary, $textColor);
 
   &.disabled {
     opacity: 0.6;
-    background: #f0f0f0;
+    background: var(--bg-primary, #f0f0f0);
   }
 
   &:hover {
-    border-color: $customPurple;
+    border-color: var(--purple-primary, $customPurple);
   }
 }
 
@@ -509,19 +519,20 @@
 .groupName {
   font-weight: 600;
   font-size: 16px;
+  color: var(--text-primary, $textColor);
 }
 
 .groupApplyTo {
   font-size: 13px;
-  color: #666;
-  background: #e9ecef;
+  color: var(--text-secondary, #666);
+  background: var(--bg-primary, #e9ecef);
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 13px;
 }
 
 .wordsCount {
   font-size: 13px;
-  color: #888;
+  color: var(--text-secondary, #888);
 }
 
 .exclusionGroupActions {
@@ -534,7 +545,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 13px;
   transition: background .3s;
   display: flex;
   align-items: center;
@@ -543,10 +554,11 @@
   svg {
     width: 18px;
     height: 18px;
+    fill: var(--text-secondary, $textColor);
   }
 
   &:hover {
-    background: #e9ecef;
+    background: var(--bg-primary, #e9ecef);
   }
 }
 
@@ -562,10 +574,11 @@
   align-items: center;
   gap: 4px;
   padding: 4px 10px;
-  background: #fff;
-  border: 1px solid $borderColor;
-  border-radius: 16px;
+  background: var(--bg-tertiary, #fff);
+  border: 1px solid var(--border-color, $borderColor);
+  border-radius: 13px;
   font-size: 13px;
+  color: var(--text-primary, $textColor);
 }
 
 .btnRemoveWord {
@@ -579,21 +592,21 @@
   border: none;
   cursor: pointer;
   border-radius: 50%;
-  color: #666;
+  color: var(--text-secondary, #666);
   transition: all .3s;
 
   &:hover {
-    background: $customRed;
-    color: #fff;
+    background: var(--error, $customRed);
+    color: var(--text-primary, #fff);
   }
 }
 
 .btnIconSmall {
   padding: 4px 8px;
-  background: $customPurple;
+  background: var(--purple-primary, $customPurple);
   border: none;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 13px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -601,15 +614,15 @@
   svg {
     width: 14px;
     height: 14px;
-    fill: #fff;
+    fill: var(--text-primary, #fff);
   }
 
   &:hover {
-    background: #495fe4;
+    background: var(--purple-dark, #495fe4);
   }
 
   &:disabled {
-    background: $borderColor;
+    background: var(--border-color, $borderColor);
     cursor: not-allowed;
   }
 }
@@ -622,13 +635,15 @@
   .wordInput {
     flex: 1;
     padding: 8px 12px;
-    border: 1px solid $borderColor;
-    border-radius: 4px;
+    border: 1px solid var(--border-color, $borderColor);
+    border-radius: 13px;
     font-size: 14px;
+    background: var(--bg-tertiary, #fff);
+    color: var(--text-primary, $textColor);
 
     &:focus {
       outline: none;
-      border-color: $customPurple;
+      border-color: var(--purple-primary, $customPurple);
     }
   }
 }
@@ -640,7 +655,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--modal-overlay, rgba(0, 0, 0, 0.5));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -648,19 +663,21 @@
 }
 
 .modal {
-  background: #fff;
-  border-radius: 8px;
+  background: var(--bg-secondary, #fff);
+  border-radius: 13px;
   padding: 24px;
   max-width: 500px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
+  color: var(--text-primary, $textColor);
 }
 
 .modalTitle {
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: 600;
+  color: var(--text-primary, $textColor);
 }
 
 .modalContent {
@@ -677,14 +694,16 @@
 
 .select {
   padding: 10px 12px;
-  border: 1px solid $borderColor;
-  border-radius: 4px;
+  border: 1px solid var(--border-color, $borderColor);
+  border-radius: 13px;
   font-size: 14px;
   cursor: pointer;
+  background: var(--bg-tertiary, #fff);
+  color: var(--text-primary, $textColor);
 
   &:focus {
     outline: none;
-    border-color: $customPurple;
+    border-color: var(--purple-primary, $customPurple);
   }
 }
 
@@ -698,22 +717,22 @@
 
   .btnAddWord {
     padding: 8px 16px;
-    background: $customPurple;
-    color: #fff;
+    background: var(--purple-primary, $customPurple);
+    color: var(--text-primary, #fff);
     border: none;
-    border-radius: 4px;
+    border-radius: 13px;
     cursor: pointer;
     font-size: 14px;
     transition: background .3s;
 
     &:hover {
-      background: #495fe4;
+      background: var(--purple-dark, #495fe4);
     }
   }
 }
 
 .error {
-  color: $customRed;
+  color: var(--error, $customRed);
   font-size: 13px;
   margin: 0;
 }
@@ -728,29 +747,30 @@
 .btnCancel {
   padding: 10px 20px;
   background: transparent;
-  border: 1px solid $borderColor;
-  border-radius: 4px;
+  border: 1px solid var(--border-color, $borderColor);
+  border-radius: 13px;
   cursor: pointer;
   font-size: 14px;
   transition: all .3s;
+  color: var(--text-primary, $textColor);
 
   &:hover {
-    border-color: #666;
+    border-color: var(--text-secondary, #666);
   }
 }
 
 .btnSave {
   padding: 10px 20px;
-  background: $customPurple;
-  color: #fff;
+  background: var(--purple-primary, $customPurple);
+  color: var(--text-primary, #fff);
   border: none;
-  border-radius: 4px;
+  border-radius: 13px;
   cursor: pointer;
   font-size: 14px;
   transition: background .3s;
 
   &:hover {
-    background: #495fe4;
+    background: var(--purple-dark, #495fe4);
   }
 }
 

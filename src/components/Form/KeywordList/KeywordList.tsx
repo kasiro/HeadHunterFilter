@@ -15,10 +15,10 @@ interface ExtendedKeywordListProps extends KeywordListProps {
 function KeywordList({ keywordType, keywordsList, deleteKeyword, updateKeywordApplyTo, exclusionGroups }: ExtendedKeywordListProps) {
   const getWord = (kw: Keyword | string): string => (typeof kw === 'string' ? kw : kw.word);
   const getApplyTo = (kw: Keyword | string): string => (typeof kw === 'string' ? 'both' : kw.applyTo);
-  
+
   // Determine if this is excluded words (unnecessary) or keywords (necessary)
   const isExcluded = keywordType.id === 'unnecessary';
-  
+
   // Check if a keyword is a group reference
   const findGroupByKeyword = (keyword: Keyword | string): ExclusionGroup | undefined => {
     const word = getWord(keyword);
@@ -29,7 +29,7 @@ function KeywordList({ keywordType, keywordsList, deleteKeyword, updateKeywordAp
     const word = getWord(kw);
     updateKeywordApplyTo(keywordType.id, word, e.target.value as 'title' | 'description' | 'both');
   };
-  
+
   const handleDelete = (keyword: Keyword | string) => {
     const group = findGroupByKeyword(keyword);
     if (group) {
@@ -60,25 +60,19 @@ function KeywordList({ keywordType, keywordsList, deleteKeyword, updateKeywordAp
               data-tip={isGroup && group ? `Группа: ${group.words.join(', ')}` : undefined}
               data-effect="solid"
               data-for={`keyword-tooltip-${keywordType.id}-${wordId}`}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleDelete(keyWord);
+                }
+              }}
             >
               {getWord(keyWord)}
               {isGroup && (
-                <>
-                  <span className={styles.groupBadge}>Группа</span>
-                  <span className={styles.exclusionIcon}>×</span>
-                </>
+                <span className={styles.groupBadge}>Группа</span>
               )}
-              {!isGroup && isExcluded && <span className={styles.exclusionIcon}>×</span>}
-              <select
-                className={styles.keywordApplyToBadge}
-                value={getApplyTo(keyWord)}
-                onChange={(e) => handleApplyToChange(e, keyWord)}
-                onClick={(e) => e.stopPropagation()}
-              >
-                <option value="title">название</option>
-                <option value="description">описание</option>
-                <option value="both">оба</option>
-              </select>
             </span>
           );
         })

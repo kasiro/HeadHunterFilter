@@ -18,3 +18,28 @@
     grid-template-columns: 100%;
   }
 }
+
+// Color variables for status text
+:global(.text--isJun) {
+  color: var(--jun-color, $junColor);
+}
+
+:global(.text--exp3) {
+  color: var(--exp3-color, $exp3Color);
+}
+
+:global(.text--exp6) {
+  color: var(--exp6-color, $exp6Color);
+}
+
+:global(.text--new) {
+  color: var(--new-color, $newColor);
+}
+
+:global(.text--fav) {
+  color: var(--fav-color, $favColor);
+}
+
+:global(.text--salary) {
+  color: var(--salary-color, $salaryColor);
+}

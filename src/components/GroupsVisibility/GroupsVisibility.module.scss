@@ -14,12 +14,12 @@
 .filterItem {
   margin-right: 5px;
   padding: 5px 25px;
-  border-radius: $commonBorderRadius;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
   border: none;
-  background-color: $customPurpleL;
+  background-color: var(--purple-light, $customPurpleL);
   font-weight: 500;
   font-size: 14px;
-  color: #fff;
+  color: var(--text-primary, #fff);
   cursor: pointer;
   transition: background-color .2s;
 
@@ -28,16 +28,16 @@
   }
 
   &:hover {
-    background-color: $customPurple;
+    background-color: var(--purple-primary, $customPurple);
   }
 }
 
 .filterItemActive {
   composes: filterItem;
-  background-color: $customPurple;
+  background-color: var(--purple-primary, $customPurple);
 
   &:hover {
-    background-color: $customPurpleH;
+    background-color: var(--purple-dark, $customPurpleH);
   }
 }
 
@@ -45,6 +45,7 @@
   margin-right: 10px;
   font-size: 18px;
   font-weight: 500;
+  color: var(--text-primary, $textColor);
 
   @media ($tabletP) {
     width: 100%;

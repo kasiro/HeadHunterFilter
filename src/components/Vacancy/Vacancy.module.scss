@@ -52,7 +52,7 @@
     svg {
 
       *:not(g) {
-        fill: variables.$textColor;
+        fill: var(--text-primary, variables.$textColor);
       }
     }
   }
@@ -61,7 +61,7 @@
     width: 27px;
 
     *:not(g) {
-      fill: lightgray;
+      fill: var(--text-secondary, lightgray);
       transition: fill .2s;
     }
   }
@@ -74,7 +74,7 @@
 
 .new {
   font-size: 11px;
-  color: variables.$newColor;
+  color: var(--new-color, variables.$newColor);
   transform: translate(3px, -3px);
 }
 
@@ -85,7 +85,7 @@
   top: calc(100% + 5px);
   left: 0;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 13px;
   font-size: 15px;
   z-index: 1;
   border: 1px solid var(--border-color, #EEEFF5);
@@ -102,7 +102,7 @@
 }
 
 .presetCurrency {
-  color: variables.$customPurple;
+  color: var(--purple-primary, variables.$customPurple);
 }
 
 .description {
@@ -112,7 +112,7 @@
   highlighttext {
     margin: -2px 0;
     padding: 2px;
-    background-color: #ffff90;
+    background-color: var(--highlight-bg, #ffff90);
   }
 }
 
@@ -123,7 +123,7 @@
   white-space: normal;
   overflow: visible;
   text-overflow: clip;
-  color: variables.$linkColor;
+  color: var(--link-color, variables.$linkColor);
 }
 
 :global(.text--archived) {
@@ -132,13 +132,13 @@
 }
 
 :global(.text--isJun) {
-  color: variables.$junColor;
+  color: var(--jun-color, variables.$junColor);
 }
 
 :global(.text--exp3) {
-  color: variables.$exp3Color;
+  color: var(--exp3-color, variables.$exp3Color);
 }
 
 :global(.text--exp6) {
-  color: variables.$exp6Color;
+  color: var(--exp6-color, variables.$exp6Color);
 }

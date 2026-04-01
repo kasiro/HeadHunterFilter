@@ -11,17 +11,18 @@
 
 .rootLink {
   text-decoration: none;
-  color: $textColor;
+  color: var(--text-primary, $textColor);
   transition: color .2s;
 
   &:hover {
-    color: $customPurple;
+    color: var(--purple-primary, $customPurple);
   }
 }
 
 .title {
   font-weight: 500;
   font-size: 32px;
+  color: var(--text-primary, $textColor);
 }
 
 .btns {
@@ -40,10 +41,10 @@
   &:hover {
 
     svg *:not(g) {
-      fill: $customPurple;
+      fill: var(--purple-primary, $customPurple);
     }
   }
-  
+
   /* info icon */
   svg {
     width: 18px;
@@ -51,7 +52,7 @@
     margin-right: 5px;
 
     *:not(g) {
-      fill: $defaultColor;
+      fill: var(--default-color, $defaultColor);
       transition: fill .4s;
     }
   }
@@ -65,6 +66,7 @@
   font-size: 15px;
   font-weight: 500;
   cursor: pointer;
+  color: var(--text-primary, $textColor);
 
   @media ($mobileL) {
     margin: 0;
@@ -84,7 +86,7 @@
       /* switch inner icon */
       &>span {
         transform: translateX(16px);
-        background-color: $customPurpleH;
+        background-color: var(--purple-dark, $customPurpleH);
       }
 
       &+span {
@@ -103,15 +105,15 @@
       margin-right: 10px;
       padding: 2px;
       align-items: center;
-      border: 2px solid $customPurpleL;
-      border-radius: $commonBorderRadius;
-      background-color: #fff;
+      border: 2px solid var(--purple-light, $customPurpleL);
+      border-radius: var(--common-border-radius, $commonBorderRadius);
+      background-color: var(--bg-tertiary, #fff);
 
       /* switch inner icon */
       span {
         width: 16px;
         height: 16px;
-        background-color: $customPurpleL;
+        background-color: var(--purple-light, $customPurpleL);
         border-radius: 50%;
         transition: .2s;
       }
@@ -120,6 +122,7 @@
       &+span {
         opacity: .7;
         transition: .2s;
+        color: var(--text-primary, $textColor);
 
         &:hover {
           opacity: 1;
@@ -138,7 +141,7 @@
   font-size: 15px;
   font-weight: 500;
   border: 2px solid;
-  border-radius: $commonBorderRadius;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
   background-color: transparent;
   color: var(--text-primary, black);
   transition: .2s;
@@ -161,10 +164,11 @@
 
 .arch {
   composes: btn;
-  border-color: $customRed;
+  border-color: var(--error, $customRed);
 
   &:hover {
-    background-color: $customRed;
+    background-color: var(--error, $customRed);
+    color: var(--text-primary, #fff);
   }
 
   &-disabled {
@@ -175,10 +179,11 @@
 
 .fav {
   composes: btn;
-  border-color: $favColor;
+  border-color: var(--fav-color, $favColor);
 
   &:hover {
-    background-color: $favColor;
+    background-color: var(--fav-color, $favColor);
+    color: var(--text-primary, #fff);
   }
 
   &-disabled {
@@ -189,10 +194,11 @@
 
 .del {
   composes: btn;
-  border-color: $defaultColor;
+  border-color: var(--default-color, $defaultColor);
 
   &:hover {
-    background-color: $defaultColor;
+    background-color: var(--default-color, $defaultColor);
+    color: var(--text-primary, #fff);
   }
 
   &-disabled {
@@ -203,22 +209,22 @@
 
 .themeToggle {
   composes: btn;
-  border-color: $customPurpleL;
+  border-color: var(--purple-light, $customPurpleL);
   font-size: 20px;
   padding: 8px 12px;
 
   &:hover {
-    background-color: $customPurpleL;
+    background-color: var(--purple-light, $customPurpleL);
   }
 }
 
 .settingsBtn {
   composes: btn;
-  border-color: $customPurpleL;
+  border-color: var(--purple-light, $customPurpleL);
   font-size: 20px;
   padding: 8px 12px;
 
   &:hover {
-    background-color: $customPurpleL;
+    background-color: var(--purple-light, $customPurpleL);
   }
 }

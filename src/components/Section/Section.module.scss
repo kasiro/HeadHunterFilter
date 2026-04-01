@@ -2,6 +2,7 @@
 
 .loadingTitle {
   margin: 10px 0;
+  color: var(--text-primary, $textColor);
 }
 
 .section {
@@ -21,14 +22,14 @@
 
 .loader {
   height: 14px;
-  border-radius: 10px;
+  border-radius: 13px;
   background-color: var(--bg-tertiary, #fff);
   overflow: hidden;
 
   span {
     display: block;
     height: 100%;
-    background-color: $customPurpleH;
+    background-color: var(--purple-dark, $customPurpleH);
     transition: .2s ease-in;
   }
 }

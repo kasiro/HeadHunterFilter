@@ -9,8 +9,8 @@
     .select {
 
       &-selection-item {
-        border-radius: $commonBorderRadius $commonBorderRadius 0 0;
-        background-color: #fff;
+        border-radius: var(--common-border-radius, $commonBorderRadius) var(--common-border-radius, $commonBorderRadius) 0 0;
+        background-color: var(--bg-tertiary, #fff);
       }
 
       &-arrow {
@@ -36,16 +36,16 @@
   &-selection-item {
     display: block;
     padding: 16px 20px;
-    border-radius: $commonBorderRadius;
-    border: 2px solid $borderColor;
-    background-color: $backgroundColor;
+    border-radius: var(--common-border-radius, $commonBorderRadius);
+    border: 2px solid var(--border-color, $borderColor);
+    background-color: var(--bg-primary, $backgroundColor);
     transition: background-color .2s;
   }
 
   &-dropdown {
-    border-radius: 0 0 $commonBorderRadius $commonBorderRadius;
-    border: 2px solid $borderColor;
-    background-color: #fff;
+    border-radius: 0 0 var(--common-border-radius, $commonBorderRadius) var(--common-border-radius, $commonBorderRadius);
+    border: 2px solid var(--border-color, $borderColor);
+    background-color: var(--bg-tertiary, #fff);
 
 
 
@@ -57,13 +57,14 @@
     [aria-selected] {
       padding: 10px 20px;
       cursor: pointer;
+      color: var(--text-primary, $textColor);
 
       &:hover {
         font-weight: 500;
       }
 
       &[aria-selected="true"] {
-        background-color: $customPurpleL;
+        background-color: var(--purple-light, $customPurpleL);
       }
     }
   }

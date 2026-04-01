@@ -5,7 +5,7 @@
   margin-right: 20px;
   align-items: center;
   padding: 12px 0;
-  border-radius: $commonBorderRadius;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
   font-size: 24px;
   cursor: pointer;
   position: relative;
@@ -18,7 +18,7 @@
     left: 0;
     width: 0;
     height: 4px;
-    background-color: $customPurple;
+    background-color: var(--purple-primary, $customPurple);
     transition: width .4s ease-in-out;
   }
 
@@ -33,7 +33,7 @@
       left: 0;
       top: 50%;
       font-weight: 400;
-      color: $inactiveText;
+      color: var(--text-secondary, $inactiveText);
       transform: translateY(-50%);
       transition: color .2s;
     }
@@ -47,7 +47,7 @@
     justify-content: center;
     padding-left: 8px;
     text-align: center;
-    color: $inactiveText;
+    color: var(--text-secondary, $inactiveText);
     font-weight: 500;
     opacity: .5;
     transition: color .2s, opacity .2s;
@@ -56,6 +56,10 @@
     svg {
       width: 20px;
       height: 20px;
+      
+      path {
+        fill: var(--text-secondary, $inactiveText);
+      }
     }
   }
 }
@@ -87,13 +91,13 @@
 
     /* visible text */
     &:before {
-      color: $textColor;
+      color: var(--text-primary, $textColor);
     }
   }
 
   /* num */
   span {
-    color: $exp6Color;
+    color: var(--exp6-color, $exp6Color);
     opacity: 1;
   }
 }

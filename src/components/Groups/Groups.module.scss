@@ -6,9 +6,9 @@
   display: inline-block;
   margin: 0;
   padding: 4px 15px;
-  border: 2px solid $defaultColor;
-  border-radius: $commonBorderRadius;
-  background: $backgroundColor;
+  border: 2px solid var(--default-color, $defaultColor);
+  border-radius: var(--common-border-radius, $commonBorderRadius);
+  background: var(--bg-primary, $backgroundColor);
   font-size: 16px;
   font-weight: 500;
   transform: translateY(-50%);
@@ -18,7 +18,7 @@
   margin: 0 ($containerPHDesktop * -1) + 10 40px;
   padding: 0 $containerPHDesktop - 10 25px;
   border: 2px solid transparent;
-  border-radius: $commonBorderRadius;
+  border-radius: var(--common-border-radius, $commonBorderRadius);
 
   @media ($tabletP) {
     margin: 0 ($containerPHTablet * -1) + 10 30px;
@@ -28,29 +28,29 @@
 
 .isFav {
   composes: group;
-  border-color: $favColor;
+  border-color: var(--fav-color, $favColor);
 
   .title {
-    border-color: $favColor;
+    border-color: var(--fav-color, $favColor);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $favColor;
+    box-shadow: var(--shadow-params, $shadowParams) var(--fav-color, $favColor);
   }
 }
 
 .isNew {
   composes: group;
-  border-color: $newColor;
+  border-color: var(--new-color, $newColor);
 
   .title {
-    border-color: $newColor;
+    border-color: var(--new-color, $newColor);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $newColor;
+    box-shadow: var(--shadow-params, $shadowParams) var(--new-color, $newColor);
   }
 
   sup {
@@ -60,69 +60,69 @@
 
 .exp3 {
   composes: group;
-  border-color: $exp3Color;
+  border-color: var(--exp3-color, $exp3Color);
 
   .title {
-    border-color: $exp3Color;
+    border-color: var(--exp3-color, $exp3Color);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $exp3Color;
+    box-shadow: var(--shadow-params, $shadowParams) var(--exp3-color, $exp3Color);
   }
 
   :global(.text--exp3) {
-    color: $linkColor;
+    color: var(--link-color, $linkColor);
   }
 }
 
 .exp6 {
   composes: group;
-  border-color: $exp6Color;
+  border-color: var(--exp6-color, $exp6Color);
 
   .title {
-    border-color: $exp6Color;
+    border-color: var(--exp6-color, $exp6Color);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $exp6Color;
+    box-shadow: var(--shadow-params, $shadowParams) var(--exp6-color, $exp6Color);
   }
 
   :global(.text--exp6) {
-    color: $linkColor;
+    color: var(--link-color, $linkColor);
   }
 }
 
 .isJun {
   composes: group;
-  border-color: $junColor;
+  border-color: var(--jun-color, $junColor);
 
   .title {
-    border-color: $junColor;
+    border-color: var(--jun-color, $junColor);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $junColor;
+    box-shadow: var(--shadow-params, $shadowParams) var(--jun-color, $junColor);
   }
 
   :global(.text--isJun) {
-    color: $linkColor;
+    color: var(--link-color, $linkColor);
   }
 }
 
 .isSalary {
   composes: group;
-  border-color: $salaryColor;
+  border-color: var(--salary-color, $salaryColor);
 
   .title {
-    border-color: $salaryColor;
+    border-color: var(--salary-color, $salaryColor);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $salaryColor;
+    box-shadow: var(--shadow-params, $shadowParams) var(--salary-color, $salaryColor);
   }
 
   :global(.isSalary) {
@@ -132,14 +132,14 @@
 
 .default {
   composes: group;
-  border-color: $defaultColor;
+  border-color: var(--default-color, $defaultColor);
 
   .title {
-    border-color: $defaultColor;
+    border-color: var(--default-color, $defaultColor);
   }
 
   /* vacancy description todo mixin */
   :global(.popup) {
-    box-shadow: $shadowParams $defaultColor;
+    box-shadow: var(--shadow-params, $shadowParams) var(--default-color, $defaultColor);
   }
 }

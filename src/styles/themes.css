@@ -33,39 +33,59 @@
   /* Special */
   --highlight-bg: #ffff90;
   --shadow-color: rgba(0, 0, 0, 0.1);
+  
+  /* Semantic tokens for better dark mode support */
+  --surface: var(--bg-secondary);
+  --surface-elevated: var(--bg-tertiary);
+  --on-surface: var(--text-primary);
+  --on-surface-secondary: var(--text-secondary);
+  --primary: var(--purple-primary);
+  --primary-hover: var(--purple-dark);
+  --error: var(--red-color);
+  --error-hover: #e65e5e;
 }
 
 .dark-theme {
-  /* Dark theme */
+  /* Dark theme - desaturated tones for better readability */
   --bg-primary: #1a1a2e;
-  --bg-secondary: #16213e;
-  --bg-tertiary: #0f3460;
-  --text-primary: #eaeaea;
-  --text-secondary: #a0a0a0;
-  --link-color: #b8b8b8;
+  --bg-secondary: #1f2335;
+  --bg-tertiary: #2a2f45;
+  --text-primary: #e8e8e8;
+  --text-secondary: #9e9e9e;
+  --link-color: #c0c0c0;
   --link-hover: #a8c8ff;
-  --border-color: #2a2a4a;
+  --border-color: #3a3f5a;
 
-  /* Brand colors - adjusted for dark */
-  --purple-primary: #7b8ef5;
-  --purple-dark: #5e72eb;
-  --purple-light: #3a4a8a;
+  /* Brand colors - desaturated for dark mode */
+  --purple-primary: #6b7de8;
+  --purple-dark: #5566d1;
+  --purple-light: #2a3565;
 
-  /* Status colors - adjusted */
-  --fav-color: #e6b87d;
-  --new-color: #e67d7d;
-  --jun-color: #7dd6c5;
-  --exp3-color: #7db8e6;
-  --exp6-color: #7d8ae6;
-  --salary-color: #7dc46d;
-  --default-color: #666666;
-  --red-color: #e65e5e;
+  /* Status colors - desaturated and adjusted for contrast */
+  --fav-color: #d4a574;
+  --new-color: #e08585;
+  --jun-color: #6bc4b3;
+  --exp3-color: #7da8d4;
+  --exp6-color: #8594d4;
+  --salary-color: #85b874;
+  --default-color: #757575;
+  --red-color: #e07070;
 
   /* Vacancy title color - adjusted for dark */
-  --vacancy-title-color: #b8b8b8;
+  --vacancy-title-color: #c0c0c0;
   --vacancy-title-hover: #a8c8ff;
 
   /* Special */
-  --highlight-bg: #5a5a30;
-  --shadow-color: rgba(0, 0, 0, 0.3);
+  --highlight-bg: #4a4a25;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  
+  /* Semantic tokens for dark mode */
+  --surface: var(--bg-secondary);
+  --surface-elevated: var(--bg-tertiary);
+  --on-surface: var(--text-primary);
+  --on-surface-secondary: var(--text-secondary);
+  --primary: var(--purple-primary);
+  --primary-hover: var(--purple-dark);
+  --error: var(--red-color);
+  --error-hover: #ff6b6b;
 }
